@@ -302,7 +302,7 @@ int main(int argc, char **argv)
 	/*
 	 * advertise publisher topics
 	 */
-	ROS_CREATE_PUBLISHER(vision_msgs::Detection2DArray, "detections", 25, detection_pub);
+	ROS_CREATE_PUBLISHER(vision_msgs::Detection2DArray, "detections", 10, detection_pub);
 	ROS_CREATE_PUBLISHER(sensor_msgs::Image, "overlay", 2, overlay_pub);
 	ROS_CREATE_PUBLISHER(std_msgs::Bool, "dummy", 1, dummy_pub);
 	
@@ -312,7 +312,7 @@ int main(int argc, char **argv)
 	/*
 	 * subscribe to image topic
 	 */
-	auto img_sub = ROS_CREATE_SUBSCRIBER(sensor_msgs::Image, "image_in", 5, img_callback);
+	auto img_sub = ROS_CREATE_SUBSCRIBER(sensor_msgs::Image, "image_in", 1, img_callback);
 
 	
 	/*
