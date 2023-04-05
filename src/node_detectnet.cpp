@@ -27,6 +27,8 @@
 
 #include <unordered_map>
 
+#include <std_msgs/Bool.h>
+
 
 // globals
 detectNet* net = NULL;
@@ -37,6 +39,7 @@ imageConverter* overlay_cvt = NULL;
 
 Publisher<vision_msgs::Detection2DArray> detection_pub = NULL;
 Publisher<sensor_msgs::Image> overlay_pub = NULL;
+Publisher<std_msgs::Bool> dummy_pub = NULL;
 Publisher<vision_msgs::VisionInfo> info_pub = NULL;
 
 vision_msgs::VisionInfo info_msg;
@@ -160,6 +163,11 @@ void img_callback( const sensor_msgs::ImageConstPtr input )
 
 		// publish the detection message
 		detection_pub->publish(msg);
+	}
+	{
+		std_msgs::Bool msg;
+		msg.data = true;
+		dummy_pub->publish(msg);
 	}
 
 	// generate the overlay (if there are subscribers)
@@ -296,6 +304,7 @@ int main(int argc, char **argv)
 	 */
 	ROS_CREATE_PUBLISHER(vision_msgs::Detection2DArray, "detections", 25, detection_pub);
 	ROS_CREATE_PUBLISHER(sensor_msgs::Image, "overlay", 2, overlay_pub);
+	ROS_CREATE_PUBLISHER(std_msgs::Bool, "dummy", 1, dummy_pub);
 	
 	ROS_CREATE_PUBLISHER_STATUS(vision_msgs::VisionInfo, "vision_info", 1, info_callback, info_pub);
 
